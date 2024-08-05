@@ -9,6 +9,41 @@
     color: white;
 }
 
+.bot-text-container {
+    max-width: 220px;
+    width: 100%;
+    background-color: #89CFF0;
+    position: relative;
+    top: 100px;
+    margin: 0 auto;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+
+   
+}
+
+.bot-text {
+    color: white;
+}
+
+.person-text-container {
+    max-width: 220px;
+    width: 100%;
+    background-color: #0985bf;
+    position: relative;
+    top: 100px;
+    margin: 0 auto;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+   
+}
+.person-text{
+    color: white;
+
+}
+
 
 
 

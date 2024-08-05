@@ -41,7 +41,6 @@ export default function Home() {
       width={"100vw"}
       height={"100vh"}
       bgcolor={"#E5E4E2	"}
-      display="flex"
     >
       {/*CHAT BOX CONTAINER*/}
       <Box
@@ -83,8 +82,18 @@ export default function Home() {
         >
           <h4 className='title'>CHAT BOT</h4>
         </Box>
-        
-        
+
+        <div className='bot-text-container'>
+          <p className='bot-text'>Bot text</p>
+        </div>
+
+        <div className='person-text-container'>
+          <p className='person-text'>Person text
+          </p>
+        </div>
+
+      
+
         <div className='text-chat-container'>
           <input className='input-label' placeholder='Type Here...' type='text' />
           <button className='send-btn'>
