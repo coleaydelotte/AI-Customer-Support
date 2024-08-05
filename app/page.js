@@ -14,37 +14,38 @@ export default function Home() {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-            } else {
-                entry.target.classList.remove('show');
-            }
-        });
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        } else {
+          entry.target.classList.remove('show');
+        }
+      });
     });
     const hiddenElements = document.querySelectorAll('.hidden');
     hiddenElements.forEach((element) => {
-        observer.observe(element);
+      observer.observe(element);
     });
 
     return () => {
-        hiddenElements.forEach((element) => {
-            observer.unobserve(element);
-        });
+      hiddenElements.forEach((element) => {
+        observer.unobserve(element);
+      });
     };
-}, []); 
+  }, []);
 
 
   return (
 
-    <Box 
+    <Box
       width={"100vw"}
       height={"100vh"}
       bgcolor={"#E5E4E2	"}
     >
       {/*CHAT BOX CONTAINER*/}
       <Box
-      className="hidden"
+        overflow={"scroll"}
+        className="hidden"
         alignItems="center"
         width={"20%"}
         height={"60%"}
@@ -83,16 +84,49 @@ export default function Home() {
           <h4 className='title'>CHAT BOT</h4>
         </Box>
 
-        <div className='bot-text-container'>
-          <p className='bot-text'>Bot text</p>
+        <div className='container'>
+          <div className='bot-text-container'>
+            <p className='bot-text'>Bot text</p>
+          </div>
+
+          <div className='person-text-container'>
+            <p className='person-text'>Person text
+            </p>
+          </div>    
+          <div className='bot-text-container'>
+            <p className='bot-text'>Bot text</p>
+          </div>
+
+          <div className='person-text-container'>
+            <p className='person-text'>Person text
+            </p>
+          </div>    
+
+          <div className='bot-text-container'>
+            <p className='bot-text'>Bot text</p>
+          </div>
+
+          <div className='person-text-container'>
+            <p className='person-text'>Person text
+            </p>
+          </div>    
+          <div className='bot-text-container'>
+            <p className='bot-text'>Bot text</p>
+          </div>
+
+          <div className='person-text-container'>
+            <p className='person-text'>Person text
+            </p>
+          </div>    
         </div>
 
-        <div className='person-text-container'>
-          <p className='person-text'>Person text
-          </p>
-        </div>
 
-      
+
+
+
+
+
+
 
         <div className='text-chat-container'>
           <input className='input-label' placeholder='Type Here...' type='text' />
