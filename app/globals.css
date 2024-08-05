@@ -3,3 +3,19 @@
   padding: 0;
   margin: 0;
 }
+
+/* 
+Hidden Animation
+*/
+.hidden {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: ease-in-out 2s;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+
+
+}
