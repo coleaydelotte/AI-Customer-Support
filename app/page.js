@@ -6,33 +6,15 @@ import './page.css'
 import { Chat } from "@phosphor-icons/react/dist/ssr/Chat";
 import { useEffect } from 'react';
 import { blue } from '@mui/material/colors';
+import useIntersectionObserver from './useIntersectionObserver'
 
 
 export default function Home() {
 
   /** Animation When The Program Runs*/
+  useIntersectionObserver();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        } else {
-          entry.target.classList.remove('show');
-        }
-      });
-    });
-    const hiddenElements = document.querySelectorAll('.hidden');
-    hiddenElements.forEach((element) => {
-      observer.observe(element);
-    });
 
-    return () => {
-      hiddenElements.forEach((element) => {
-        observer.unobserve(element);
-      });
-    };
-  }, []);
 
 
   return (
