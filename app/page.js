@@ -1,14 +1,11 @@
 "use client";
 
-
 import { Box, Typography, TextField } from '@mui/material';
 import './page.css'
 import { Chat } from "@phosphor-icons/react/dist/ssr/Chat";
 import { useEffect, useState } from 'react';
 import { blue } from '@mui/material/colors';
 import useIntersectionObserver from './useIntersectionObserver'
-
-
 
 export default function Home() {
 
@@ -24,8 +21,8 @@ export default function Home() {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   /**This is the function that runs the program */
-  async function run() {
-    const prompt = "Write 2 words"
+  async function run(userPrompt) {
+    const prompt = "Pretend your a Customer service agent and you are responding to a customer who is asking this question: "+ userPrompt;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -34,19 +31,10 @@ export default function Home() {
     console.log(text);
   }
 
-
-
-
-
   const [chatResponse, setChatResponse] = useState('')
+  const [input, setInput] = useState('')
 
-
-
-
-
-
-
-
+  console.log(chatResponse)
 
   return (
 
@@ -133,17 +121,13 @@ export default function Home() {
           </div>
         </div>
 
-
-
-
-
-
-
-
-
         <div className='text-chat-container'>
-          <input className='input-label' placeholder='Type Here...' type='text' />
-          <button onClick={run} className='send-btn'>
+          <input type='text' placeholder='Type your message here' onChange={(e) => setInput(e.target.value)} value={input} />
+          {console.log(input)}
+          <button className='send-btn' onClick={() => {
+                        run(input)
+                        setInput('')
+                    }}>
             <Chat size={25} color='white' />
           </button>
         </div>
