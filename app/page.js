@@ -4,15 +4,46 @@
 import { Box, Typography, TextField } from '@mui/material';
 import './page.css'
 import { Chat } from "@phosphor-icons/react/dist/ssr/Chat";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { blue } from '@mui/material/colors';
 import useIntersectionObserver from './useIntersectionObserver'
+
 
 
 export default function Home() {
 
   /** Animation When The Program Runs*/
+
   useIntersectionObserver();
+
+  /**This make sures that the google generative ai takes the API KEY*/
+
+  const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+  const { GoogleGenerativeAI } = require("@google/generative-ai");
+  const genAI = new GoogleGenerativeAI(API_KEY);
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+  /**This is the function that runs the program */
+  async function run() {
+    const prompt = "Write 2 words"
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    setChatResponse(text)
+    console.log(text);
+  }
+
+
+
+
+
+  const [chatResponse, setChatResponse] = useState('')
+
+
+
+
+
 
 
 
@@ -68,13 +99,13 @@ export default function Home() {
 
         <div className='container'>
           <div className='bot-text-container'>
-            <p className='bot-text'>Bot text</p>
+            <p className='bot-text'>{chatResponse}</p>
           </div>
 
           <div className='person-text-container'>
             <p className='person-text'>Person text
             </p>
-          </div>    
+          </div>
           <div className='bot-text-container'>
             <p className='bot-text'>Bot text</p>
           </div>
@@ -82,7 +113,7 @@ export default function Home() {
           <div className='person-text-container'>
             <p className='person-text'>Person text
             </p>
-          </div>    
+          </div>
 
           <div className='bot-text-container'>
             <p className='bot-text'>Bot text</p>
@@ -91,7 +122,7 @@ export default function Home() {
           <div className='person-text-container'>
             <p className='person-text'>Person text
             </p>
-          </div>    
+          </div>
           <div className='bot-text-container'>
             <p className='bot-text'>Bot text</p>
           </div>
@@ -99,7 +130,7 @@ export default function Home() {
           <div className='person-text-container'>
             <p className='person-text'>Person text
             </p>
-          </div>    
+          </div>
         </div>
 
 
@@ -112,7 +143,7 @@ export default function Home() {
 
         <div className='text-chat-container'>
           <input className='input-label' placeholder='Type Here...' type='text' />
-          <button className='send-btn'>
+          <button onClick={run} className='send-btn'>
             <Chat size={25} color='white' />
           </button>
         </div>
