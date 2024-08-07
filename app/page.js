@@ -32,10 +32,14 @@ export default function Home() {
     const conversationHistory = messages.map(message => `${message.type === 'user' ? 'User' : 'Bot'}: ${message.text}`).join('\n');
     
     // Include the conversation history in the prompt
-    const prompt = `${conversationHistory}\nUser: ${userPrompt}\nBot:`;
+    const prompt = `ConversationHistory: ${conversationHistory} \nRole: Pretend to be a customer service agent, and if I give you and empty input than say you must type something\nUser: ${userPrompt}\nBot:`;
+
+
 
     const result = await model.generateContent(prompt);
+
     const response = await result.response;
+
     const text = await response.text();
 
     setMessages(prevMessages => [
@@ -54,7 +58,7 @@ export default function Home() {
       {/*CHAT BOX CONTAINER*/}
       <Box
         overflow={"scroll"}
-        className="hidden"
+        className="main-container hidden"
         alignItems="center"
         width={"20%"}
         height={"60%"}
@@ -67,7 +71,7 @@ export default function Home() {
         sx={{
           borderTopLeftRadius: "30px",
           borderTopRightRadius: "30px",
-          border: "none"
+          border: "1px solid #89CFF0"
         }}
       >
         {/*HEADER*/}
@@ -88,7 +92,7 @@ export default function Home() {
           }}
           zIndex={-1}
         >
-          <h4 className='title'>CHAT BOT</h4>
+          <h4 className='title'>Support Bot</h4>
         </Box>
 
         <div className='container'>
@@ -105,9 +109,9 @@ export default function Home() {
         </div>
 
         <div className='text-chat-container'>
-          <input
+          <input className='input-label'
             type='text'
-            placeholder='Type your message here'
+            placeholder='Type Here'
             onChange={(e) => setInput(e.target.value)}
             value={input}
           />
