@@ -1,11 +1,10 @@
 "use client";
 
-import { Box, Typography, TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import './page.css'
 import { Chat } from "@phosphor-icons/react/dist/ssr/Chat";
-import { useEffect, useState } from 'react';
-import { blue } from '@mui/material/colors';
-import useIntersectionObserver from './useIntersectionObserver'
+import { useState } from 'react';
+import useIntersectionObserver from './useIntersectionObserver';
 
 export default function Home() {
 
@@ -13,35 +12,44 @@ export default function Home() {
 
   useIntersectionObserver();
 
-  /**This make sures that the google generative ai takes the API KEY*/
+  /**This make sure that the google generative ai takes the API KEY*/
 
   const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
   const { GoogleGenerativeAI } = require("@google/generative-ai");
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+  // Initialize the messages state with the base message
+  const [messages, setMessages] = useState([
+    { type: 'bot', text: "Hello! I am a customer service agent, how can I help you today?" }
+  ]);
+  const [input, setInput] = useState('');
+
   /**This is the function that runs the program */
   async function run(userPrompt) {
-    const prompt = "Pretend your a Customer service agent and you are responding to a customer who is asking this question: "+ userPrompt;
+    
+    // Construct the conversation history as a single string
+    const conversationHistory = messages.map(message => `${message.type === 'user' ? 'User' : 'Bot'}: ${message.text}`).join('\n');
+    
+    // Include the conversation history in the prompt
+    const prompt = `${conversationHistory}\nUser: ${userPrompt}\nBot:`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const text = response.text();
-    setChatResponse(text)
-    console.log(text);
+    const text = await response.text();
+
+    setMessages(prevMessages => [
+      ...prevMessages,
+      { type: 'user', text: userPrompt },
+      { type: 'bot', text: text }
+    ]);
   }
 
-  const [chatResponse, setChatResponse] = useState('')
-  const [input, setInput] = useState('')
-
-  console.log(chatResponse)
-
   return (
-
     <Box
       width={"100vw"}
       height={"100vh"}
-      bgcolor={"#E5E4E2	"}
+      bgcolor={"#E5E4E2"}
     >
       {/*CHAT BOX CONTAINER*/}
       <Box
@@ -50,7 +58,7 @@ export default function Home() {
         alignItems="center"
         width={"20%"}
         height={"60%"}
-        bgcolor={"#FFFFFF	"}
+        bgcolor={"#FFFFFF"}
         position={"fixed"}
         zIndex={0}
         bottom={0}
@@ -60,12 +68,11 @@ export default function Home() {
           borderTopLeftRadius: "30px",
           borderTopRightRadius: "30px",
           border: "none"
-
         }}
       >
         {/*HEADER*/}
         <Box
-          bgcolor={"#89CFF0	"}
+          bgcolor={"#89CFF0"}
           position={"absolute"}
           top={0}
           width={"100%"}
@@ -80,54 +87,34 @@ export default function Home() {
             border: "none"
           }}
           zIndex={-1}
-
         >
           <h4 className='title'>CHAT BOT</h4>
         </Box>
 
         <div className='container'>
-          <div className='bot-text-container'>
-            <p className='bot-text'>{chatResponse}</p>
-          </div>
-
-          <div className='person-text-container'>
-            <p className='person-text'>Person text
-            </p>
-          </div>
-          <div className='bot-text-container'>
-            <p className='bot-text'>Bot text</p>
-          </div>
-
-          <div className='person-text-container'>
-            <p className='person-text'>Person text
-            </p>
-          </div>
-
-          <div className='bot-text-container'>
-            <p className='bot-text'>Bot text</p>
-          </div>
-
-          <div className='person-text-container'>
-            <p className='person-text'>Person text
-            </p>
-          </div>
-          <div className='bot-text-container'>
-            <p className='bot-text'>Bot text</p>
-          </div>
-
-          <div className='person-text-container'>
-            <p className='person-text'>Person text
-            </p>
-          </div>
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={message.type === 'user' ? 'person-text-container' : 'bot-text-container'}
+            >
+              <p className={message.type === 'user' ? 'person-text' : 'bot-text'}>
+                {message.text}
+              </p>
+            </div>
+          ))}
         </div>
 
         <div className='text-chat-container'>
-          <input type='text' placeholder='Type your message here' onChange={(e) => setInput(e.target.value)} value={input} />
-          {console.log(input)}
+          <input
+            type='text'
+            placeholder='Type your message here'
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
+          />
           <button className='send-btn' onClick={() => {
-                        run(input)
-                        setInput('')
-                    }}>
+            run(input);
+            setInput('');
+          }}>
             <Chat size={25} color='white' />
           </button>
         </div>
