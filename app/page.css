@@ -4,8 +4,9 @@
 .container {
     position: relative;
     top: 100px;
-    overflow: scroll;
     height: 300px;
+    overflow-y: scroll;
+
 }
 
 .main-container {
