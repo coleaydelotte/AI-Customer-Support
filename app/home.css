@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  header p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  header button {
+    background-color: #00a8e8;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+  }
+  
+  /* Main Content Styles */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .features, .testimonials, .cta {
+    margin-bottom: 4rem;
+  }
+  
+  .features h2, .testimonials h2, .cta h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .features ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .features li {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .testimonials blockquote {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+  
+  .testimonials cite {
+    display: block;
+    font-size: 1.2rem;
+    font-style: normal;
+    text-align: right;
+  }
+  
+  .cta button {
+    background-color: #00a8e8;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+  }
+  
+  /* Footer Styles */
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  footer p {
+    font-size: 0.9rem;
+    margin: 0;
+  }
