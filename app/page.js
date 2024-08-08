@@ -57,7 +57,6 @@ export default function Home() {
     >
       {/*CHAT BOX CONTAINER*/}
       <Box
-        overflow={"scroll"}
         className="main-container hidden"
         alignItems="center"
         width={"20%"}
