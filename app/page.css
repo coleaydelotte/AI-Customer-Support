@@ -27,7 +27,7 @@
 }
 
 .bot-text-container {
-    animation: fadeIn 1.2s ease-in-out;
+    animation: fadeIn 2s ease-in-out;
     max-width: 220px;
     width: 100%;
     background-color: #89CFF0;
