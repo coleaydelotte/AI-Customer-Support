@@ -30,10 +30,12 @@ export default function Home() {
       <section className='testimonials'>
         <h2>What Our Customers Say</h2>
         <blockquote>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           <p>"Using this platform has been a game-changer for my business. It's never been easier to sell online."</p>
           - John Doe, Small Business Owner
         </blockquote>
         <blockquote>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           <p>"The features and support have helped me grow my sales exponentially. Highly recommended!"</p>
           - Jane Smith, Ecommerce Entrepreneur
         </blockquote>
