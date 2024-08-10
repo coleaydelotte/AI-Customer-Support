@@ -4,6 +4,7 @@ import { Box, TextField } from '@mui/material';
 import '../page.css'
 import { Chat } from "@phosphor-icons/react/dist/ssr/Chat";
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import useIntersectionObserver from '../useIntersectionObserver';
 
 export default function Bot() {
@@ -28,29 +29,22 @@ export default function Bot() {
 
     /**This is the function that runs the program */
     async function run(userPrompt) {
-
-        // Construct the conversation history as a single string
-        const conversationHistory = messages.map(message => `${message.type === 'user' ? 'User' : 'Bot'}: ${message.text}`).join('\n');
-
+        // Construct the conversation history as a single string without "User:" and "Bot:" prefixes
+        const conversationHistory = messages.map(message => message.text).join('\n');
+    
         // Include the conversation history in the prompt
-        const prompt = `ConversationHistory: ${conversationHistory} \nRole: I am an AI assistant created to help customers of the "Sell Your Products with Ease" website. IF THE USERS SAY NOTHING OR LEAVE EMPTY SPACE, TELL THE USER TO TYPE SOMETHING. I'm the customer service agent for this platform. How can I assist you today? I'd be happy to provide more information about our key features, share some customer testimonials, help you with the sign-up process, or answer any other questions you may have. Some of the main features of our platform include: - Easy-to-use online store builder - Secure payment processing - Comprehensive analytics and reporting - Customizable marketing tools Our customers love how easy it is to set up and manage their online stores with our platform. Here's what a couple of them have said: "Using this platform has been a game-changer for my business. It's never been easier to sell online." - John Doe, Small Business Owner "The features and support have helped me grow my sales exponentially. Highly recommended!" - Jane Smith, Ecommerce Entrepreneur If you're ready to get started, you can sign up on our website at sellproducts.com. Just click the "Sign Up Now" button and I'll be happy to walk you through the process. Please let me know if there's anything else I can assist you with. I'm here to help ensure you have a smooth experience selling your products online.\nUser: ${userPrompt}\nBot:`;
-
-
-
+        const prompt = `ConversationHistory: ${conversationHistory} \nRole: I am an AI assistant created to help customers of the "Sell Your Products with Ease" website. IF THE USERS SAY NOTHING OR LEAVE EMPTY SPACE, TELL THE USER TO TYPE SOMETHING. I'm the customer service agent for this platform. How can I assist you today? I'd be happy to provide more information about our key features, share some customer testimonials, help you with the sign-up process, or answer any other questions you may have. Some of the main features of our platform include: - Easy-to-use online store builder - Secure payment processing - Comprehensive analytics and reporting - Customizable marketing tools Our customers love how easy it is to set up and manage their online stores with our platform. Here's what a couple of them have said: "Using this platform has been a game-changer for my business. It's never been easier to sell online." - John Doe, Small Business Owner "The features and support have helped me grow my sales exponentially. Highly recommended!" - Jane Smith, Ecommerce Entrepreneur If you're ready to get started, you can sign up on our website at sellproducts.com. Just click the "Sign Up Now" button and I'll be happy to walk you through the process. Please let me know if there's anything else I can assist you with. I'm here to help ensure you have a smooth experience selling your products online.\nUser: ${userPrompt}\n`;
+    
         const result = await model.generateContent(prompt);
-
-        const response = await result.response;
-
-        const text = await response.text();
-
+    
+        const text = result.response.text();
+    
         setMessages(prevMessages => [
             ...prevMessages,
             { type: 'user', text: userPrompt },
-            { type: 'bot', text: text }
+            { type: 'bot', text }
         ]);
     }
-
-
 
     return (
         <Box
@@ -98,9 +92,9 @@ export default function Bot() {
                         key={index}
                         className={message.type === 'user' ? 'person-text-container' : 'bot-text-container'}
                     >
-                        <p className={message.type === 'user' ? 'person-text' : 'bot-text'}>
-                            {message.text}
-                        </p>
+                        <div className={message.type === 'user' ? 'person-text' : 'bot-text'}>
+                            <ReactMarkdown>{message.text}</ReactMarkdown>
+                        </div>
                     </div>
                 ))}
             </div>
